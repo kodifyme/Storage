@@ -10,7 +10,11 @@ import FirebaseStorage
 
 class StorageViewController: UIViewController {
     
-    private let storageView = StorageView()
+    private lazy var storageView: StorageView = {
+        let view = StorageView()
+        view.delegate = self
+        return view
+    }()
     private var storageRef: StorageReference!
     
     override func viewDidLoad() {
@@ -41,6 +45,12 @@ class StorageViewController: UIViewController {
             }
             self.storageView.items = result!.items
         }
+    }
+}
+
+extension StorageViewController: StorageViewDelegate {
+    func didSelectFile(_ fileRef: StorageReference) {
+        navigationController?.pushViewController(ContentViewController(fileRef: fileRef), animated: true)
     }
 }
 

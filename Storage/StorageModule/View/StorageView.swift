@@ -71,8 +71,7 @@ extension StorageView: UITableViewDataSource {
 extension StorageView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let fileRef = items[indexPath.row]
-        delegate?.didSelectFile(fileRef)
+        delegate?.didSelectFile(items[indexPath.row])
     }
 }
 

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		123BC4FE2C06120000B6BB20 /* StorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123BC4FD2C06120000B6BB20 /* StorageView.swift */; };
+		12436E032C08D05D0094A988 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12436E022C08D05D0094A988 /* ContentViewController.swift */; };
+		12436E052C08D53F0094A988 /* FileContentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12436E042C08D53F0094A988 /* FileContentManager.swift */; };
 		129CADF62C06030000DC3F5C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 129CADF52C06030000DC3F5C /* GoogleService-Info.plist */; };
 		12CBFCB32C052540008C0904 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CBFCB22C052540008C0904 /* AppDelegate.swift */; };
 		12CBFCB52C052540008C0904 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CBFCB42C052540008C0904 /* SceneDelegate.swift */; };
@@ -19,6 +21,8 @@
 
 /* Begin PBXFileReference section */
 		123BC4FD2C06120000B6BB20 /* StorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageView.swift; sourceTree = "<group>"; };
+		12436E022C08D05D0094A988 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		12436E042C08D53F0094A988 /* FileContentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileContentManager.swift; sourceTree = "<group>"; };
 		129CADF52C06030000DC3F5C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		12CBFCAF2C052540008C0904 /* Storage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Storage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12CBFCB22C052540008C0904 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +56,47 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		12436E062C08E3EC0094A988 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				12436E042C08D53F0094A988 /* FileContentManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		12436E072C08E4000094A988 /* StorageModule */ = {
+			isa = PBXGroup;
+			children = (
+				123BC4FC2C0611F000B6BB20 /* View */,
+				12436E082C08E4130094A988 /* ViewController */,
+			);
+			path = StorageModule;
+			sourceTree = "<group>";
+		};
+		12436E082C08E4130094A988 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				12CBFCB62C052540008C0904 /* StorageViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		12436E092C08E42B0094A988 /* ContentModule */ = {
+			isa = PBXGroup;
+			children = (
+				12436E0A2C08E4390094A988 /* ViewController */,
+			);
+			path = ContentModule;
+			sourceTree = "<group>";
+		};
+		12436E0A2C08E4390094A988 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				12436E022C08D05D0094A988 /* ContentViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		12CBFCA62C052540008C0904 = {
 			isa = PBXGroup;
 			children = (
@@ -75,8 +120,9 @@
 			children = (
 				129CADF52C06030000DC3F5C /* GoogleService-Info.plist */,
 				12CBFCC72C05290A008C0904 /* Application */,
-				12CBFCB62C052540008C0904 /* StorageViewController.swift */,
-				123BC4FC2C0611F000B6BB20 /* View */,
+				12436E062C08E3EC0094A988 /* Manager */,
+				12436E072C08E4000094A988 /* StorageModule */,
+				12436E092C08E42B0094A988 /* ContentModule */,
 				12CBFCC62C052837008C0904 /* Resurces */,
 			);
 			path = Storage;
@@ -233,8 +279,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12436E032C08D05D0094A988 /* ContentViewController.swift in Sources */,
 				123BC4FE2C06120000B6BB20 /* StorageView.swift in Sources */,
 				12CBFCB72C052540008C0904 /* StorageViewController.swift in Sources */,
+				12436E052C08D53F0094A988 /* FileContentManager.swift in Sources */,
 				12CBFCB32C052540008C0904 /* AppDelegate.swift in Sources */,
 				12CBFCB52C052540008C0904 /* SceneDelegate.swift in Sources */,
 			);
