@@ -62,7 +62,7 @@ class FileContentManager {
         }
     }
     
-    func playAudioFile(from reference: StorageReference, in viewController: ContentViewController) {
+    func playAudioFile(from reference: StorageReference, in viewController: UIViewController) {
         reference.downloadURL { url, error in
             guard let url, error == nil else {
                 print("Error fetching audio URL: \(error?.localizedDescription ?? "Unknown error")")
@@ -71,9 +71,7 @@ class FileContentManager {
             let player = AVPlayer(url: url)
             let playerViewController = AVPlayerViewController()
             playerViewController.player = player
-            viewController.present(playerViewController, animated: true) {
-                player.play()
-            }
+            viewController.present(playerViewController, animated: true)
         }
     }
     
@@ -86,9 +84,7 @@ class FileContentManager {
             let player = AVPlayer(url: url)
             let playerViewController = AVPlayerViewController()
             playerViewController.player = player
-            viewController.present(playerViewController, animated: true) {
-                player.play()
-            }
+            viewController.present(playerViewController, animated: true)
         }
     }
 }

@@ -42,14 +42,10 @@ class ContentViewController: UIViewController {
     private func displayContent(for reference: StorageReference) {
         if reference.name.hasSuffix(".txt") {
             fileContnent.displayTextFile(from: reference, in: self)
-        } else if reference.name.hasSuffix(".jpg") || reference.name.hasSuffix(".png") || reference.name.hasSuffix(".jpeg"){
+        } else if reference.name.hasSuffix(".jpg") || reference.name.hasSuffix(".png") || reference.name.hasSuffix(".jpeg") {
             fileContnent.displayImageFile(from: reference, in: self)
         } else if reference.name.hasSuffix(".pdf") {
             fileContnent.displayPDFFile(from: reference, in: self)
-        } else if reference.name.hasSuffix(".mp3") || reference.name.hasSuffix(".wav") {
-            fileContnent.playAudioFile(from: reference, in: self)
-        } else if reference.name.hasSuffix(".mp4") {
-            fileContnent.playVideoFile(from: reference, in: self)
         }
     }
 }

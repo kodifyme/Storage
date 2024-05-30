@@ -10,12 +10,14 @@ import FirebaseStorage
 
 class StorageViewController: UIViewController {
     
+    private let fileContnent = FileContentManager.shared
+    private var storageRef: StorageReference!
+    
     private lazy var storageView: StorageView = {
         let view = StorageView()
         view.delegate = self
         return view
     }()
-    private var storageRef: StorageReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,9 +50,16 @@ class StorageViewController: UIViewController {
     }
 }
 
+//MARK: - StorageViewDelegate
 extension StorageViewController: StorageViewDelegate {
     func didSelectFile(_ fileRef: StorageReference) {
-        navigationController?.pushViewController(ContentViewController(fileRef: fileRef), animated: true)
+        if fileRef.name.hasSuffix(".mp3") || fileRef.name.hasSuffix(".wav") {
+            fileContnent.playAudioFile(from: fileRef, in: self)
+        } else if fileRef.name.hasSuffix(".mp4") {
+            fileContnent.playVideoFile(from: fileRef, in: self)
+        } else {
+            navigationController?.pushViewController(ContentViewController(fileRef: fileRef), animated: true)
+        }
     }
 }
 
