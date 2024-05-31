@@ -8,14 +8,21 @@
 import UIKit
 import FirebaseStorage
 
+protocol StorageViewControllerDelegate: AnyObject {
+    func updateItems(items: [StorageReference])
+}
+
 class StorageViewController: UIViewController {
     
     private let fileContnent = FileContentManager.shared
     private var storageRef: StorageReference!
     
+    weak var delegate: StorageViewControllerDelegate?
+    
     private lazy var storageView: StorageView = {
         let view = StorageView()
         view.delegate = self
+        delegate = view
         return view
     }()
     
@@ -40,12 +47,12 @@ class StorageViewController: UIViewController {
     }
     
     private func fetchStorageContents() {
-        storageRef.listAll { (result, error) in
+        storageRef.listAll { result, error in
             if let error = error {
                 print(error)
                 return
             }
-            self.storageView.items = result!.items
+            self.delegate?.updateItems(items: result?.items ?? [])
         }
     }
 }

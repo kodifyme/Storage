@@ -75,6 +75,13 @@ extension StorageView: UITableViewDelegate {
     }
 }
 
+//MARK: - StorageViewControllerDelegate
+extension StorageView: StorageViewControllerDelegate {
+    func updateItems(items: [FirebaseStorage.StorageReference]) {
+        self.items = items
+    }
+}
+
 //MARK: - Constraints
 private extension StorageView {
     func setupConstraints() {
