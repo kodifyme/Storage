@@ -87,4 +87,10 @@ class FileContentManager {
             viewController.present(playerViewController, animated: true)
         }
     }
+    
+    func deleteFile(from reference: StorageReference) {
+        reference.delete { error in
+            guard error != nil else { return }
+        }
+    }
 }

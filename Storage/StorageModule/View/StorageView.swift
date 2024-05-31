@@ -10,13 +10,14 @@ import FirebaseStorage
 
 protocol StorageViewDelegate: AnyObject {
     func didSelectFile(_ fileRef: StorageReference)
+    func deleteFile(fileRef: StorageReference)
 }
 
 class StorageView: UIView {
     
     weak var delegate: StorageViewDelegate?
     
-    var items: [StorageReference] = [] {
+    private var items: [StorageReference] = [] {
         didSet {
             storageTableView.reloadData()
         }
@@ -72,6 +73,13 @@ extension StorageView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.didSelectFile(items[indexPath.row])
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            delegate?.deleteFile(fileRef: items[indexPath.row])
+            items.remove(at: indexPath.row)
+        }
     }
 }
 

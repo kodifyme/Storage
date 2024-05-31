@@ -68,6 +68,10 @@ extension StorageViewController: StorageViewDelegate {
             navigationController?.pushViewController(ContentViewController(fileRef: fileRef), animated: true)
         }
     }
+    
+    func deleteFile(fileRef: FirebaseStorage.StorageReference) {
+        fileContnent.deleteFile(from: fileRef)
+    }
 }
 
 //MARK: - Constraints
