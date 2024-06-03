@@ -10,10 +10,12 @@ import FirebaseStorage
 
 protocol StorageViewDelegate: AnyObject {
     func didSelectFile(_ fileRef: StorageReference)
-    func deleteFile(fileRef: StorageReference)
+    func deleteFile(_ fileRef: StorageReference)
 }
 
 class StorageView: UIView {
+    
+    private let identifier = "cell"
     
     weak var delegate: StorageViewDelegate?
     
@@ -25,7 +27,7 @@ class StorageView: UIView {
     
     private lazy var storageTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -61,9 +63,8 @@ extension StorageView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let item = items[indexPath.row]
-        cell.textLabel?.text = item.name
+        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+        cell.textLabel?.text = items[indexPath.row].name
         return cell
     }
 }
@@ -77,7 +78,7 @@ extension StorageView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            delegate?.deleteFile(fileRef: items[indexPath.row])
+            delegate?.deleteFile(items[indexPath.row])
             items.remove(at: indexPath.row)
         }
     }

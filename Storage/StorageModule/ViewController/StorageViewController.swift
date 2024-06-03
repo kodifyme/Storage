@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseStorage
+import AVKit
 
 protocol StorageViewControllerDelegate: AnyObject {
     func updateItems(items: [StorageReference])
@@ -14,8 +15,7 @@ protocol StorageViewControllerDelegate: AnyObject {
 
 class StorageViewController: UIViewController {
     
-    private let fileContnent = FileContentManager.shared
-    private var storageRef: StorageReference!
+    private let firebaseManager = FirebaseManager.shared
     
     weak var delegate: StorageViewControllerDelegate?
     
@@ -32,8 +32,6 @@ class StorageViewController: UIViewController {
         setupNavigationBar()
         setupView()
         setupConstraints()
-        
-        storageRef = Storage.storage().reference()
         fetchStorageContents()
     }
     
@@ -47,12 +45,8 @@ class StorageViewController: UIViewController {
     }
     
     private func fetchStorageContents() {
-        storageRef.listAll { result, error in
-            if let error = error {
-                print(error)
-                return
-            }
-            self.delegate?.updateItems(items: result?.items ?? [])
+        firebaseManager.fetchStorageContents { items in
+            self.delegate?.updateItems(items: items)
         }
     }
 }
@@ -60,17 +54,27 @@ class StorageViewController: UIViewController {
 //MARK: - StorageViewDelegate
 extension StorageViewController: StorageViewDelegate {
     func didSelectFile(_ fileRef: StorageReference) {
-        if fileRef.name.hasSuffix(".mp3") || fileRef.name.hasSuffix(".wav") {
-            fileContnent.playAudioFile(from: fileRef, in: self)
-        } else if fileRef.name.hasSuffix(".mp4") {
-            fileContnent.playVideoFile(from: fileRef, in: self)
-        } else {
+        let fileType = FileType(fileRef: fileRef)
+        switch fileType {
+        case .media:
+            firebaseManager.playMediaFile(from: fileRef) { result in
+                switch result {
+                case .success(let url):
+                    let player = AVPlayer(url: url)
+                    let playerViewController = AVPlayerViewController()
+                    playerViewController.player = player
+                    self.present(playerViewController, animated: true)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        default:
             navigationController?.pushViewController(ContentViewController(fileRef: fileRef), animated: true)
         }
     }
     
-    func deleteFile(fileRef: FirebaseStorage.StorageReference) {
-        fileContnent.deleteFile(from: fileRef)
+    func deleteFile(_ fileRef: FirebaseStorage.StorageReference) {
+        firebaseManager.deleteFile(from: fileRef)
     }
 }
 

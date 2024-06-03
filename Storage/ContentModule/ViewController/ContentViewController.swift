@@ -7,10 +7,11 @@
 
 import UIKit
 import FirebaseStorage
+import PDFKit
 
 class ContentViewController: UIViewController {
     
-    private let fileContnent = FileContentManager.shared
+    private let firebaseManager = FirebaseManager.shared
     let fileRef: StorageReference
     
     init(fileRef: StorageReference) {
@@ -40,12 +41,51 @@ class ContentViewController: UIViewController {
     }
     
     private func displayContent(for reference: StorageReference) {
-        if reference.name.hasSuffix(".txt") {
-            fileContnent.displayTextFile(from: reference, in: self)
-        } else if reference.name.hasSuffix(".jpg") || reference.name.hasSuffix(".png") || reference.name.hasSuffix(".jpeg") {
-            fileContnent.displayImageFile(from: reference, in: self)
-        } else if reference.name.hasSuffix(".pdf") {
-            fileContnent.displayPDFFile(from: reference, in: self)
+        let fileType = FileType(fileRef: reference)
+        switch fileType {
+        case .text:
+            firebaseManager.displayTextFile(from: reference) { result in
+                switch result {
+                case .success(let data):
+                    if let text = String(data: data, encoding: .utf8) {
+                        let textView = UITextView()
+                        textView.text = text
+                        self.view.addSubview(textView)
+                        self.setupConstraints(for: textView)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case .image:
+            firebaseManager.displayImageFile(from: reference) { result in
+                switch result {
+                case .success(let data):
+                    if let image = UIImage(data: data) {
+                        let imageView = UIImageView()
+                        imageView.contentMode = .scaleAspectFit
+                        imageView.image = image
+                        self.view.addSubview(imageView)
+                        self.setupConstraints(for: imageView)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case .pdf:
+            firebaseManager.displayPDFFile(from: reference) { result in
+                switch result {
+                case .success(let data):
+                    let pdfView = PDFView()
+                    pdfView.document = PDFDocument(data: data)
+                    self.view.addSubview(pdfView)
+                    self.setupConstraints(for: pdfView)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case .media, .other:
+            break
         }
     }
 }
