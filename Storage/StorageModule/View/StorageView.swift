@@ -54,6 +54,21 @@ class StorageView: UIView {
         storageTableView.dataSource = self
         storageTableView.delegate = self
     }
+    
+    private func image(for fileType: FileType) -> UIImage? {
+        switch fileType {
+        case .text:
+            return UIImage(systemName: "doc.plaintext")
+        case .image:
+            return UIImage(systemName: "photo")
+        case .pdf:
+            return UIImage(systemName: "doc")
+        case .media:
+            return UIImage(systemName: "wave.3.forward.circle")
+        case .other:
+            return nil
+        }
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -64,7 +79,10 @@ extension StorageView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-        cell.textLabel?.text = items[indexPath.row].name
+        let fileRef = items[indexPath.row]
+        let fileType = FileType(fileRef: fileRef)
+        cell.imageView?.image = image(for: fileType)
+        cell.textLabel?.text = fileRef.name
         return cell
     }
 }
