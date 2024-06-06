@@ -27,21 +27,10 @@ enum FileType {
     case other
     
     init(fileRef: StorageReference) {
-        
-        if fileRef.name.hasSuffix(FileExtensions.mp3) || fileRef.name.hasSuffix(FileExtensions.wav) || fileRef.name.hasSuffix(FileExtensions.mp4) {
-            self =  .media
-        } else if fileRef.name.hasSuffix(FileExtensions.txt) {
-            self =  .text
-        } else if fileRef.name.hasSuffix(FileExtensions.jpg) || fileRef.name.hasSuffix(FileExtensions.png) || fileRef.name.hasSuffix(FileExtensions.jpeg) {
-            self =  .image
-        } else if fileRef.name.hasSuffix(FileExtensions.pdf) {
-            self =   .pdf
-        } else {
-            self = .other
-        }
+        self = FileType.fileType(for: fileRef)
     }
     
-    private func fileType(for fileRef: StorageReference) -> FileType {
+    private static func fileType(for fileRef: StorageReference) -> FileType {
         if fileRef.name.hasSuffix(FileExtensions.mp3) || fileRef.name.hasSuffix(FileExtensions.wav) || fileRef.name.hasSuffix(FileExtensions.mp4) {
             return .media
         } else if fileRef.name.hasSuffix(FileExtensions.txt) {
@@ -49,9 +38,9 @@ enum FileType {
         } else if fileRef.name.hasSuffix(FileExtensions.jpg) || fileRef.name.hasSuffix(FileExtensions.png) || fileRef.name.hasSuffix(FileExtensions.jpeg) {
             return .image
         } else if fileRef.name.hasSuffix(FileExtensions.pdf) {
-            return  .pdf
+            return .pdf
         } else {
-            return  .other
+            return .other
         }
     }
 }

@@ -18,6 +18,7 @@ class StorageViewController: UIViewController {
     private let firebaseManager = FirebaseManager.shared
     
     weak var delegate: StorageViewControllerDelegate?
+    private var currentPath = ""
     
     private lazy var storageView: StorageView = {
         let view = StorageView()
@@ -38,6 +39,7 @@ class StorageViewController: UIViewController {
     private func setupNavigationBar() {
         title = "Storage"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(didTapBack))
     }
     
     private func setupView() {
@@ -45,9 +47,18 @@ class StorageViewController: UIViewController {
     }
     
     private func fetchStorageContents() {
-        firebaseManager.fetchStorageContents { items in
-            self.delegate?.updateItems(items: items)
+        firebaseManager.fetchStorageContents(at: currentPath) { result in
+            switch result {
+            case .success(let items):
+                self.delegate?.updateItems(items: items)
+            case .failure(let error):
+                print(error)
+            }
         }
+    }
+    
+    @objc private func didTapBack() {
+        
     }
 }
 

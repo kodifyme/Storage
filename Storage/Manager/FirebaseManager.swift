@@ -14,6 +14,8 @@ struct FileSize {
     static let imageFileSize: Int64 = 10 * 1024 * 1024
 }
 
+typealias Completion = (Result<Data, Error>) -> Void
+
 class FirebaseManager {
     
     static let shared = FirebaseManager()
@@ -24,7 +26,7 @@ class FirebaseManager {
         storageRef = Storage.storage().reference()
     }
     
-    func displayTextFile(from reference: StorageReference, completion: @escaping (Result<Data,Error>) -> Void) {
+    func displayTextFile(from reference: StorageReference, completion: @escaping Completion) {
         reference.getData(maxSize: FileSize.textFileSize) { data, error in
             guard let data, error == nil else {
                 return completion(.failure(error!))
@@ -33,7 +35,7 @@ class FirebaseManager {
         }
     }
     
-    func displayImageFile(from reference: StorageReference, completion: @escaping (Result<Data,Error>) -> Void) {
+    func displayImageFile(from reference: StorageReference, completion: @escaping Completion) {
         reference.getData(maxSize: FileSize.imageFileSize) { data, error in
             guard let data, error == nil else {
                 return completion(.failure(error!))
@@ -42,7 +44,7 @@ class FirebaseManager {
         }
     }
     
-    func displayPDFFile(from reference: StorageReference, completion: @escaping (Result<Data,Error>) -> Void) {
+    func displayPDFFile(from reference: StorageReference, completion: @escaping Completion) {
         reference.getData(maxSize: FileSize.imageFileSize) { data, error in
             guard let data, error == nil else {
                 return completion(.failure(error!))
@@ -64,12 +66,13 @@ class FirebaseManager {
         reference.delete { _ in }
     }
     
-    func fetchStorageContents(completion: @escaping ([StorageReference]) -> Void) {
+    func fetchStorageContents(at path: String, completion: @escaping (Result<[StorageReference], Error>) -> Void) {
+        let reference = storageRef.child(path)
         storageRef.listAll { result, error in
             if let error {
-                return print(error)
+                return completion(.failure(error))
             }
-            completion(result?.items ?? [])
+            completion(.success((result?.prefixes ?? []) + (result?.items ?? [])))
         }
     }
 }
