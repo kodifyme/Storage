@@ -18,12 +18,15 @@ typealias Completion = (Result<Data, Error>) -> Void
 
 class FirebaseManager {
     
+    let rootPath = "gs://storage-7898f.appspot.com/"
+    
     static let shared = FirebaseManager()
     
-    private var storageRef: StorageReference
+    var storageRef: StorageReference
     
     private init() {
-        storageRef = Storage.storage().reference()
+        storageRef = Storage.storage().reference(forURL: rootPath)
+        
     }
     
     func displayTextFile(from reference: StorageReference, completion: @escaping Completion) {
@@ -67,7 +70,7 @@ class FirebaseManager {
     }
     
     func fetchStorageContents(at path: String, completion: @escaping (Result<[StorageReference], Error>) -> Void) {
-        let reference = storageRef.child(path)
+        storageRef = Storage.storage().reference(forURL: rootPath + path)
         storageRef.listAll { result, error in
             if let error {
                 return completion(.failure(error))

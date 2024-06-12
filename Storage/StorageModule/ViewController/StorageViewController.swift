@@ -39,7 +39,6 @@ class StorageViewController: UIViewController {
     private func setupNavigationBar() {
         title = "Storage"
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(didTapBack))
     }
     
     private func setupView() {
@@ -47,6 +46,7 @@ class StorageViewController: UIViewController {
     }
     
     private func fetchStorageContents() {
+        print("------      Fetching contents at path: \(currentPath) -----------")
         firebaseManager.fetchStorageContents(at: currentPath) { result in
             switch result {
             case .success(let items):
@@ -55,10 +55,6 @@ class StorageViewController: UIViewController {
                 print(error)
             }
         }
-    }
-    
-    @objc private func didTapBack() {
-        
     }
 }
 
@@ -75,6 +71,16 @@ extension StorageViewController: StorageViewDelegate {
                     let playerViewController = AVPlayerViewController()
                     playerViewController.player = player
                     self.present(playerViewController, animated: true)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        case .other:
+            currentPath = "gefgef"
+            firebaseManager.fetchStorageContents(at: currentPath) { result in
+                switch result {
+                case .success(let items):
+                    self.delegate?.updateItems(items: items)
                 case .failure(let error):
                     print(error)
                 }

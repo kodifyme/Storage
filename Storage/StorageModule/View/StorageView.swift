@@ -106,6 +106,7 @@ extension StorageView: UITableViewDelegate {
 extension StorageView: StorageViewControllerDelegate {
     func updateItems(items: [FirebaseStorage.StorageReference]) {
         self.items = items
+        storageTableView.reloadData()
     }
 }
 
