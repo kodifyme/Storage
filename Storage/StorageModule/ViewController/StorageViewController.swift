@@ -39,6 +39,8 @@ class StorageViewController: UIViewController {
     private func setupNavigationBar() {
         title = "Storage"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(didTapBack))
+        updateBackButtonVisibility()
     }
     
     private func setupView() {
@@ -54,6 +56,18 @@ class StorageViewController: UIViewController {
             case .failure(let error):
                 print(error)
             }
+        }
+    }
+    
+    private func updateBackButtonVisibility() {
+        navigationItem.leftBarButtonItem?.isEnabled = !currentPath.isEmpty
+    }
+    
+    @objc private func didTapBack() {
+        if !currentPath.isEmpty {
+            currentPath = (currentPath as NSString).deletingLastPathComponent
+            fetchStorageContents()
+            updateBackButtonVisibility()
         }
     }
 }
@@ -76,11 +90,12 @@ extension StorageViewController: StorageViewDelegate {
                 }
             }
         case .other:
-            currentPath = "gefgef"
+            currentPath = fileRef.fullPath
             firebaseManager.fetchStorageContents(at: currentPath) { result in
                 switch result {
                 case .success(let items):
                     self.delegate?.updateItems(items: items)
+                    self.updateBackButtonVisibility()
                 case .failure(let error):
                     print(error)
                 }

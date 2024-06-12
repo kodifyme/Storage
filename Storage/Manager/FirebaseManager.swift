@@ -14,7 +14,8 @@ struct FileSize {
     static let imageFileSize: Int64 = 10 * 1024 * 1024
 }
 
-typealias Completion = (Result<Data, Error>) -> Void
+typealias DataCompletion = (Result<Data, Error>) -> Void
+typealias FetchCompletion = (Result<[StorageReference], Error>) -> Void
 
 class FirebaseManager {
     
@@ -29,7 +30,7 @@ class FirebaseManager {
         
     }
     
-    func displayTextFile(from reference: StorageReference, completion: @escaping Completion) {
+    func displayTextFile(from reference: StorageReference, completion: @escaping DataCompletion) {
         reference.getData(maxSize: FileSize.textFileSize) { data, error in
             guard let data, error == nil else {
                 return completion(.failure(error!))
@@ -38,7 +39,7 @@ class FirebaseManager {
         }
     }
     
-    func displayImageFile(from reference: StorageReference, completion: @escaping Completion) {
+    func displayImageFile(from reference: StorageReference, completion: @escaping DataCompletion) {
         reference.getData(maxSize: FileSize.imageFileSize) { data, error in
             guard let data, error == nil else {
                 return completion(.failure(error!))
@@ -47,7 +48,7 @@ class FirebaseManager {
         }
     }
     
-    func displayPDFFile(from reference: StorageReference, completion: @escaping Completion) {
+    func displayPDFFile(from reference: StorageReference, completion: @escaping DataCompletion) {
         reference.getData(maxSize: FileSize.imageFileSize) { data, error in
             guard let data, error == nil else {
                 return completion(.failure(error!))
@@ -69,13 +70,18 @@ class FirebaseManager {
         reference.delete { _ in }
     }
     
-    func fetchStorageContents(at path: String, completion: @escaping (Result<[StorageReference], Error>) -> Void) {
-        storageRef = Storage.storage().reference(forURL: rootPath + path)
-        storageRef.listAll { result, error in
-            if let error {
-                return completion(.failure(error))
+    func fetchContents(for fileRef: StorageReference, completion: @escaping FetchCompletion) {
+        fileRef.listAll { result, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success((result?.prefixes ?? []) + (result?.items ?? [])))
             }
-            completion(.success((result?.prefixes ?? []) + (result?.items ?? [])))
         }
+    }
+    
+    func fetchStorageContents(at path: String, completion: @escaping FetchCompletion) {
+        let reference = path.isEmpty ? storageRef : storageRef.child(path)
+        fetchContents(for: reference, completion: completion)
     }
 }
