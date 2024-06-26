@@ -84,7 +84,7 @@ class ContentViewController: UIViewController {
                     print(error)
                 }
             }
-        case .media, .other:
+        case .media, .folder:
             break
         }
     }

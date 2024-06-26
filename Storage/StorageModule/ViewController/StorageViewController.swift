@@ -89,7 +89,7 @@ extension StorageViewController: StorageViewDelegate {
                     print(error)
                 }
             }
-        case .other:
+        case .folder:
             currentPath = fileRef.fullPath
             firebaseManager.fetchStorageContents(at: currentPath) { result in
                 switch result {

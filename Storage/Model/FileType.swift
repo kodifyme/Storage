@@ -10,7 +10,7 @@ import Firebase
 
 struct FileExtensions {
     static let mp3 = ".mp3"
-    static let mp4 = "mp4"
+    static let mp4 = ".mp4"
     static let wav = ".wav"
     static let txt = ".txt"
     static let jpg = ".jpg"
@@ -24,7 +24,7 @@ enum FileType {
     case image
     case pdf
     case media
-    case other
+    case folder
     
     init(fileRef: StorageReference) {
         self = FileType.fileType(for: fileRef)
@@ -40,7 +40,7 @@ enum FileType {
         } else if fileRef.name.hasSuffix(FileExtensions.pdf) {
             return .pdf
         } else {
-            return .other
+            return .folder
         }
     }
 }

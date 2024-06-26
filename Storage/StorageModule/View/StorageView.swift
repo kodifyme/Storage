@@ -65,7 +65,7 @@ class StorageView: UIView {
             return UIImage(systemName: "doc")
         case .media:
             return UIImage(systemName: "wave.3.forward.circle")
-        case .other:
+        case .folder:
             return UIImage(systemName: "folder")
         }
     }
