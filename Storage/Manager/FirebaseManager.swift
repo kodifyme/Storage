@@ -72,7 +72,7 @@ class FirebaseManager {
     
     func fetchContents(for fileRef: StorageReference, completion: @escaping FetchCompletion) {
         fileRef.listAll { result, error in
-            if let error = error {
+            if let error {
                 completion(.failure(error))
             } else {
                 completion(.success((result?.prefixes ?? []) + (result?.items ?? [])))

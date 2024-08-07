@@ -12,7 +12,7 @@ import PDFKit
 class ContentViewController: UIViewController {
     
     private let firebaseManager = FirebaseManager.shared
-    let fileRef: StorageReference
+    private let fileRef: StorageReference
     
     init(fileRef: StorageReference) {
         self.fileRef = fileRef

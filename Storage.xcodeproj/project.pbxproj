@@ -24,7 +24,6 @@
 		123BC4FD2C06120000B6BB20 /* StorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageView.swift; sourceTree = "<group>"; };
 		12436E022C08D05D0094A988 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		12436E042C08D53F0094A988 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		125A85E52C0A03D600F7432E /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		129CADF52C06030000DC3F5C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		12CBFCAF2C052540008C0904 /* Storage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Storage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12CBFCB22C052540008C0904 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				129CADF52C06030000DC3F5C /* GoogleService-Info.plist */,
-				125A85E52C0A03D600F7432E /* TODO.md */,
 				12CBFCC72C05290A008C0904 /* Application */,
 				12436E062C08E3EC0094A988 /* Manager */,
 				12CDC11B2C0A529200140AB0 /* Model */,
