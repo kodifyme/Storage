@@ -14,8 +14,7 @@ struct FileSize {
     static let imageFileSize: Int64 = 10 * 1024 * 1024
 }
 
-typealias DataCompletion = (Result<Data, Error>) -> Void
-typealias FetchCompletion = (Result<[StorageReference], Error>) -> Void
+typealias CompletionHandler<T> = (Result<T, Error>) -> Void
 
 class FirebaseManager {
     
@@ -30,7 +29,7 @@ class FirebaseManager {
         
     }
     
-    func displayTextFile(from reference: StorageReference, completion: @escaping DataCompletion) {
+    func displayTextFile(from reference: StorageReference, completion: @escaping CompletionHandler<Data>) {
         reference.getData(maxSize: FileSize.textFileSize) { data, error in
             guard let data, error == nil else {
                 return completion(.failure(error!))
@@ -39,7 +38,7 @@ class FirebaseManager {
         }
     }
     
-    func displayImageFile(from reference: StorageReference, completion: @escaping DataCompletion) {
+    func displayImageFile(from reference: StorageReference, completion: @escaping CompletionHandler<Data>) {
         reference.getData(maxSize: FileSize.imageFileSize) { data, error in
             guard let data, error == nil else {
                 return completion(.failure(error!))
@@ -48,7 +47,7 @@ class FirebaseManager {
         }
     }
     
-    func displayPDFFile(from reference: StorageReference, completion: @escaping DataCompletion) {
+    func displayPDFFile(from reference: StorageReference, completion: @escaping CompletionHandler<Data>) {
         reference.getData(maxSize: FileSize.imageFileSize) { data, error in
             guard let data, error == nil else {
                 return completion(.failure(error!))
@@ -70,7 +69,7 @@ class FirebaseManager {
         reference.delete { _ in }
     }
     
-    func fetchContents(for fileRef: StorageReference, completion: @escaping FetchCompletion) {
+    func fetchContents(for fileRef: StorageReference, completion: @escaping CompletionHandler<[StorageReference]>) {
         fileRef.listAll { result, error in
             if let error {
                 completion(.failure(error))
@@ -80,7 +79,7 @@ class FirebaseManager {
         }
     }
     
-    func fetchStorageContents(at path: String, completion: @escaping FetchCompletion) {
+    func fetchStorageContents(at path: String, completion: @escaping CompletionHandler<[StorageReference]>) {
         let reference = path.isEmpty ? storageRef : storageRef.child(path)
         fetchContents(for: reference, completion: completion)
     }
