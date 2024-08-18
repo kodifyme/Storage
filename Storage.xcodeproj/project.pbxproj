@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		121126512C72B3790068D578 /* Array + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121126502C72B3790068D578 /* Array + Extensions.swift */; };
 		123BC4FE2C06120000B6BB20 /* StorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123BC4FD2C06120000B6BB20 /* StorageView.swift */; };
 		12436E032C08D05D0094A988 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12436E022C08D05D0094A988 /* ContentViewController.swift */; };
 		12436E052C08D53F0094A988 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12436E042C08D53F0094A988 /* FirebaseManager.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		121126502C72B3790068D578 /* Array + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array + Extensions.swift"; sourceTree = "<group>"; };
 		123BC4FD2C06120000B6BB20 /* StorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageView.swift; sourceTree = "<group>"; };
 		12436E022C08D05D0094A988 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		12436E042C08D53F0094A988 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
@@ -50,6 +52,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1211264F2C72B3660068D578 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				121126502C72B3790068D578 /* Array + Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		123BC4FC2C0611F000B6BB20 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +136,7 @@
 				12CDC11B2C0A529200140AB0 /* Model */,
 				12436E072C08E4000094A988 /* StorageModule */,
 				12436E092C08E42B0094A988 /* ContentModule */,
+				1211264F2C72B3660068D578 /* Extensions */,
 				12CBFCC62C052837008C0904 /* Resurces */,
 			);
 			path = Storage;
@@ -295,6 +306,7 @@
 				123BC4FE2C06120000B6BB20 /* StorageView.swift in Sources */,
 				12CBFCB72C052540008C0904 /* StorageViewController.swift in Sources */,
 				12436E052C08D53F0094A988 /* FirebaseManager.swift in Sources */,
+				121126512C72B3790068D578 /* Array + Extensions.swift in Sources */,
 				12CBFCB32C052540008C0904 /* AppDelegate.swift in Sources */,
 				12CBFCB52C052540008C0904 /* SceneDelegate.swift in Sources */,
 			);

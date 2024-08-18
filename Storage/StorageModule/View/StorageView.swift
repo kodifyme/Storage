@@ -79,7 +79,7 @@ extension StorageView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-        let fileRef = items[indexPath.row]
+        guard let fileRef = items[safe: indexPath.row] else { return UITableViewCell() }
         let fileType = FileType(fileRef: fileRef)
         cell.imageView?.image = image(for: fileType)
         cell.textLabel?.text = fileRef.name
