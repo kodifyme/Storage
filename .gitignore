@@ -83,3 +83,7 @@ fastlane/test_output
 
 iOSInjectionProject/
 .DS_Store
+Pods/
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
